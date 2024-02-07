@@ -2,8 +2,31 @@ body{
     background-color: rgb(39, 39, 39);
     text-align: center;
     color: brown;
+
 }
 .board-container{
-    width: 500px;
-    height: 318px;
+    width: 50%;
+    height: 20rem;
+    border: 2px solid;
+    margin-left:20rem;
+    box-shadow: 20px 10px 15px 0px red;
+    /* border-collapse: collapse; */
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: gray;
+  
+}
+
+.table td {
+    padding: 12px 15px; 
+    border: 1px solid #5e05e3;
+    position: relative; 
+
+    /* text-align: center;  */
+  }
+[class$="cell"]{
+    background-color: blueviolet;
 }
