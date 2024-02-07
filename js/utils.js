@@ -29,20 +29,20 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
-function countingNeighboringCells(board, rowIdx, colIdx,item) {
-    var count = 0
+function countingNeighboringCells(board, rowIdx, colIdx) {
+    var count = 0;
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-        if (i < 0 || i >= board.length) continue
-        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-            if (i === rowIdx && j === colIdx) continue
-            if (j < 0 || j >= board[0].length) continue
-            const currCell = board[i][j]
-            if (currCell.item) count++
-
-        }
+      if (i < 0 || i >= board.length) continue;
+      for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+        if (i === rowIdx && j === colIdx) continue;
+        if (j < 0 || j >= board[0].length) continue;
+        
+        // Check if this neighbor cell is a mine  
+        if (board[i][j].isMine) count++; 
+      }
     }
-    return count
-}
+    return count;
+  }
 
 var gNums = [1, 2, 3, 4, 5, 6, 7]
 // console.log('gNums', gNums)
