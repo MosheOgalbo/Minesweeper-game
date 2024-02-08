@@ -16,27 +16,29 @@ const FLAG = ' 🚩'
 function onInit() {
     userMode('start')
     gGame.isOn = false
+    // gGame.LiveInGame = 3
     if (gTimerInterval) clearInterval(gTimerInterval)
     document.querySelector('span.timer-seconds').innerText = ''
     document.querySelector('span.timer-milli-seconds').innerText = ''
     // playSound()
     // gFirstMove = false
     gBoard = buildBoard()
-    //  createMinesInBoard(gBoard)
+    createMinesInBoard(gBoard)
     //  console.log(gBoard)
     setMinesNegsCount(gBoard)
     renderShownCount()
+    changesLifeGame()
     renderBoard(gBoard)
-    
+
 }
 
 function levelsOfPlay(el) {
     const level = el.dataset.leve
     const mines = el.dataset.mines
-   // console.log(level, mines)
+    // console.log(level, mines)
     gLevel.SIZE = level
     gLevel.MINES = mines
-    gGame.shownCount= mines
+    gGame.shownCount = mines
     // console.log(gLevel)
     onInit()
 }
@@ -69,6 +71,7 @@ function createMinesInBoard(board) {
             if (Math.random() > 0.5 && constMines > 0) {
                 board[i][j].isMine = true
                 constMines--
+                
             }
         }
     }
@@ -121,7 +124,7 @@ function onCellMarked(es, el, i, j) {
     el.classList.toggle('covered')
     if (el.innerText !== FLAG) el.innerText = FLAG
     else el.innerText = `${(gBoard[i][j].isMine) ? MINES_IMG : gBoard[i][j].minesAroundCount}`
- 
+
 
 }
 
@@ -130,19 +133,33 @@ function onCellClicked(el, i, j) {
         gGame.isOn = true
         startTimer()
     }
-   
+    userMode('step')
+
     el.classList.remove('covered')
 
     //if (!gFirstMove) createMinesInBoard(gBoard)
     //console.log(i,j)
     if (gBoard[i][j].isMine) {
-        clearInterval(gTimerInterval)
-        gBoard[i][j].isShown = true
-        checkSlotMie(el)
+        //* Because the next attraction arc decreases the life and then gives more life and therefore compares to 1
+        if (gGame.LiveInGame === 1) {
+            clearInterval(gTimerInterval)
+            gBoard[i][j].isShown = true
+            userMode('Fails')
+            checkSlotMie(el)
+            return
+        }
+        else {
+
+            changesLifeGame(-1)
+            gBoard[i][j].isShown = true
+        }
+
         return
+    } else {
+        gBoard[i][j].isShown = true
+        expandShown(i, j)
     }
-    expandShown(i, j)
-    gBoard[i][j].isShown = true
+
 
 }
 

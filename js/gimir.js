@@ -2,11 +2,11 @@
 
 var gGame = {
   isOn: false,
-  shownCount: 8,
+  shownCount: 2,
   markedCount: 0,
   secsPassed: 0,
+  LiveInGame: 0,
 }
-
 var gStartTime;
 
 
@@ -16,6 +16,7 @@ function renderShownCount() {
 }
 
 function startTimer() {
+
   if (gTimerInterval) clearInterval(gTimerInterval)
 
   gStartTime = Date.now()
@@ -33,9 +34,15 @@ function startTimer() {
 
 function checkGameOver() {
   if (gGame.shownCount === gGame.markedCount) {
+    for (var i = 0; i < gBoard; i++) {
+      for (var j = 0; j < gBoard.length; j++) {
+        if (gBoard[i][j] === gGame.isShow || gBoard[i][j] === gGame.isMarked) continue
+        else break
 
+      }
+    }
+    userMode('victory')
     document.querySelector('.bordered').style.opacity = 0
-
     //alert('Game Over')
   }
 }
@@ -44,7 +51,7 @@ function checkSlotMie(el) {
   console.log(el.innerText)
   if (el.innerText !== MINES_IMG) return false
 
-  const cells = document.querySelectorAll('.cell');
+  const cells = document.querySelectorAll('.cell')
   console.log(cells[0])
   for (const cell of cells) {
     cell.classList.add("blocked")
@@ -69,4 +76,13 @@ function userMode(mod) {
   }
   document.querySelector('.user-play').innerText = changeState
 
+}
+
+function changesLifeGame(diff = 3) {
+
+  // var sumLifeGame = gGame.LiveInGame +diff
+  var sumLifeGame = gGame.LiveInGame += diff
+  if (diff === 0) sumLifeGame
+  console.log(gGame.LiveInGame)
+  document.querySelector('.life-game').innerText = sumLifeGame
 }

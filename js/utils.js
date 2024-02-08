@@ -55,13 +55,16 @@ function getListNeighbors(board, rowIdx, colIdx) {
             if (j >= board[0].length) continue;
             if (i === rowIdx && j === colIdx) continue;
 
-            // Check if this neighbor cell is a mine
+            //* Check if this neighbor cell is a mine
             if (board[i][j].isMine) continue;
             count.push({ i, j })
         }
     }
     return count
 }
+
+
+  
 
 function drawNum() {
     return gNums.pop()
