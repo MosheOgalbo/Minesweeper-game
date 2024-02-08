@@ -7,28 +7,36 @@ var gLevel = {
     MINES: 2,
 }
 
+var gTimerInterval
 var gFirstMove = false
 const EMPTY = ''
 const MINES_IMG = '💣'
 const FLAG = ' 🚩'
 
 function onInit() {
+    userMode('start')
+    gGame.isOn = false
+    if (gTimerInterval) clearInterval(gTimerInterval)
+    document.querySelector('span.timer-seconds').innerText = ''
+    document.querySelector('span.timer-milli-seconds').innerText = ''
     // playSound()
     // gFirstMove = false
     gBoard = buildBoard()
-  //  createMinesInBoard(gBoard)
+    //  createMinesInBoard(gBoard)
     //  console.log(gBoard)
     setMinesNegsCount(gBoard)
+    renderShownCount()
     renderBoard(gBoard)
-    checkGameOver()
+    
 }
 
 function levelsOfPlay(el) {
     const level = el.dataset.leve
     const mines = el.dataset.mines
-    console.log(level, mines)
+   // console.log(level, mines)
     gLevel.SIZE = level
     gLevel.MINES = mines
+    gGame.shownCount= mines
     // console.log(gLevel)
     onInit()
 }
@@ -74,15 +82,14 @@ function renderBoard(board) {
         strHTML += `<tr class="selection-box" >\n`
         for (var j = 0; j < board[0].length; j++) {
             const cell = board[i][j]
-            var className = (!cell.isShown) ? 'bordered' : 'empty'
+            var className = (!cell.isShown) ? 'covered ' : 'open'
             const item = `${(cell.isMine) ? MINES_IMG : board[i][j].minesAroundCount}`
             const marked = (cell.isMarked) ? FLAG : ''
-            //var marked= ()?'bordered':
-            //var data={i,j}
+
             strHTML += `\t <td data-i="${i}" data-j="${j}" title="Seat:${item}" \n
-                              class="  covered cell ${className}"\n
+                              class="   bordered cell ${className}"\n
                                onclick="onCellClicked(this,${i},${j})" \n
-                               oncontextmenu="onCellMarked(event)" >\n
+                               oncontextmenu="onCellMarked(event,this,${i},${j})" >\n
                            <div >${marked}\n
                                  <span > ${item}</span>\n
                             </div > \n
@@ -109,20 +116,34 @@ function setMinesNegsCount(board) {
     return constNegs
 }
 
-function onCellMarked(es, i, j) {
+function onCellMarked(es, el, i, j) {
     es.preventDefault()
-    //  console.log(es)
-    // gBoard[i][j]=true
-    // es.innerText = FLAG
+    el.classList.toggle('covered')
+    if (el.innerText !== FLAG) el.innerText = FLAG
+    else el.innerText = `${(gBoard[i][j].isMine) ? MINES_IMG : gBoard[i][j].minesAroundCount}`
+ 
 
 }
 
 function onCellClicked(el, i, j) {
+    if (!gGame.isOn) {
+        gGame.isOn = true
+        startTimer()
+    }
+   
     el.classList.remove('covered')
+
     //if (!gFirstMove) createMinesInBoard(gBoard)
     //console.log(i,j)
-    if (gBoard[i][j].isMine) return
+    if (gBoard[i][j].isMine) {
+        clearInterval(gTimerInterval)
+        gBoard[i][j].isShown = true
+        checkSlotMie(el)
+        return
+    }
     expandShown(i, j)
+    gBoard[i][j].isShown = true
+
 }
 
 function expandShown(i, j) {
@@ -130,6 +151,13 @@ function expandShown(i, j) {
     var cellsOpen = document.querySelectorAll('td')
     for (var i = 0; i < slots.length; i++) {
         var cell = slots[i]
-       document.querySelector(`[data-i="${cell.i}"][data-j="${cell.j}"]`).classList.remove('covered')
+        getItemDataBoard(cell.i, cell.j).classList.remove('covered')
+        gBoard[cell.i][cell.j].isShown = true
+
     }
+}
+
+function getItemDataBoard(dataI, dataJ) {
+    return document.querySelector(`[data-i="${dataI}"][data-j="${dataJ}"]`)
+
 }

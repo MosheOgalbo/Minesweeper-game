@@ -16,11 +16,11 @@ body {
     border-collapse: separate;
     box-sizing: border-box;
     border-collapse: collapse;
-   
+
 }
 
 .td {
-    padding: 12px 15px; 
+    padding: 12px 15px;
     border: 1px solid #0dea53;
     position: relative;
     text-indent: initial;
@@ -28,14 +28,12 @@ body {
     border-color: rgb(15, 229, 101);
     width: 10%;
     padding-bottom: 1%;
-    text-align: center; 
+    text-align: center;
     width: 1%;
     padding: 0;
     height: 0;
     position: relative;
 }
-
-
 
 .bordered {
     height: 20%;
@@ -44,17 +42,23 @@ body {
     background-color: #ee0707;
     opacity: 20;
 }
+
 .table td span {
     color: rgb(0, 255, 136);
     display: block;
-    position: absolute;  
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
 
 
-  }
-  .covered {
+
+}
+
+.covered {
     opacity: 0;
-  }
+}
+
+.blocked {
+    pointer-events: none;
+}

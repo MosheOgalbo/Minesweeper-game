@@ -32,33 +32,33 @@ function getRandomInt(min, max) {
 function countingNeighboringCells(board, rowIdx, colIdx) {
     var count = 0
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-      if (i < 0||i >= board.length) continue;
-      for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-        if (j < 0) continue
-        if (j >= board[0].length) continue
-        if (i === rowIdx && j === colIdx) continue
-  
-        // Check if this neighbor cell is a mine
-        if (board[i][j].isMine) count++
-       
-      }
+        if (i < 0 || i >= board.length) continue;
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (j < 0) continue
+            if (j >= board[0].length) continue
+            if (i === rowIdx && j === colIdx) continue
+
+            // Check if this neighbor cell is a mine
+            if (board[i][j].isMine) count++
+
+        }
     }
     return count
-  }
-  
+}
+
 function getListNeighbors(board, rowIdx, colIdx) {
     var count = []
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-      if (i < 0||i >= board.length) continue;
-      for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-        if (j < 0) continue;
-        if (j >= board[0].length) continue;
-        if (i === rowIdx && j === colIdx) continue;
-  
-        // Check if this neighbor cell is a mine
-        if (board[i][j].isMine) continue;
-         count.push({i,j})
-      }
+        if (i < 0 || i >= board.length) continue;
+        for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+            if (j < 0) continue;
+            if (j >= board[0].length) continue;
+            if (i === rowIdx && j === colIdx) continue;
+
+            // Check if this neighbor cell is a mine
+            if (board[i][j].isMine) continue;
+            count.push({ i, j })
+        }
     }
     return count
 }
@@ -97,20 +97,16 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function startTimer() {
 
-    if (gTimerInterval) clearInterval(gTimerInterval)
 
-    gTimerInterval = setInterval(() => {
-        const timeDiff = Date.now() - startTime
+function getFormatSeconds(timeDiff) {
+    const seconds = Math.floor(timeDiff / 1000) // חישוב מספר השניות
+    return (seconds + '').padStart(2, '0') // עיצוב ל-2 ספרות
+}
 
-        const seconds = getFormatSeconds(timeDiff)
-        const milliSeconds = getFormatMilliSeconds(timeDiff)
-
-        document.querySelector('span.seconds').innerText = seconds
-        document.querySelector('span.milli-seconds').innerText = milliSeconds
-
-    }, 10)
+function getFormatMilliSeconds(timeDiff) {
+    const milliseconds = timeDiff % 1000  // מילי-שניות ישירות מ-timeDiff
+    return (milliseconds + '').padStart(3, '0'); // עיצוב ל-3 ספרות
 }
 
 function getEmptyPos(board) {
