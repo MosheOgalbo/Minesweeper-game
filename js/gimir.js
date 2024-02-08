@@ -7,7 +7,6 @@ var gGame = {
     secsPassed: 0,
 }
 
-
 function checkGameOver() {
    if (gGame.shownCount===gGame.markedCount){
     document.querySelector('.bordered').style.opacity= 0 

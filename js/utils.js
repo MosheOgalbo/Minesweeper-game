@@ -39,8 +39,8 @@ function countingNeighboringCells(board, rowIdx, colIdx) {
         if (i === rowIdx && j === colIdx) continue
   
         // Check if this neighbor cell is a mine
-        if (board[i][j].isMine) continue
-        count++
+        if (board[i][j].isMine) count++
+       
       }
     }
     return count

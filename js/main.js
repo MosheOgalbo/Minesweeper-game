@@ -124,6 +124,7 @@ function onCellClicked(el, i, j) {
     if (gBoard[i][j].isMine) return
     expandShown(i, j)
 }
+
 function expandShown(i, j) {
     var slots = getListNeighbors(gBoard, i, j)
     var cellsOpen = document.querySelectorAll('td')
@@ -132,6 +133,3 @@ function expandShown(i, j) {
        document.querySelector(`[data-i="${cell.i}"][data-j="${cell.j}"]`).classList.remove('covered')
     }
 }
-
-
-
