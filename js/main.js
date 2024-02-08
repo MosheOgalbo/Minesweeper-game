@@ -15,7 +15,7 @@ const FLAG = ' 🚩'
 
 function onInit() {
     gGame.markedCount = 0
-    gGame.shownCount=0
+    gGame.shownCount = 0
     changesLifeGame(3)
     userMode('start')
     gGame.isOn = false
@@ -28,8 +28,8 @@ function onInit() {
     //createMinesInBoard(gBoard)
     //  console.log(gBoard)
     setMinesNegsCount(gBoard)
-    
-   
+
+
     renderBoard(gBoard)
 
 }
@@ -116,7 +116,7 @@ function setMinesNegsCount(board) {
             constNegs = countingNeighboringCells(board, i, j)
             //console.log(constNegs)
             indexMines.minesAroundCount = constNegs
-            
+
         }
     }
     return constNegs
@@ -125,7 +125,7 @@ function setMinesNegsCount(board) {
 function onCellMarked(es, el, i, j) {
     es.preventDefault()
     el.classList.toggle('covered')
-    
+
     if (el.innerText !== FLAG) {
         el.innerText = FLAG
         gBoard[i][j].isMarked = true
