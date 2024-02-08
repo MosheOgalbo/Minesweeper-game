@@ -30,33 +30,38 @@ function getRandomInt(min, max) {
 }
 
 function countingNeighboringCells(board, rowIdx, colIdx) {
-    var count = 0;
+    var count = 0
     for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
-      if (i < 0 || i >= board.length) continue;
+      if (i < 0||i >= board.length) continue;
       for (var j = colIdx - 1; j <= colIdx + 1; j++) {
-        if (i === rowIdx && j === colIdx) continue;
-        if (j < 0 || j >= board[0].length) continue;
-        
-        // Check if this neighbor cell is a mine  
-        if (board[i][j].isMine) count++; 
+        if (j < 0) continue
+        if (j >= board[0].length) continue
+        if (i === rowIdx && j === colIdx) continue
+  
+        // Check if this neighbor cell is a mine
+        if (board[i][j].isMine) continue
+        count++
       }
     }
-    return count;
+    return count
   }
-
-var gNums = [1, 2, 3, 4, 5, 6, 7]
-// console.log('gNums', gNums)
-// shuffle(gNums)
-// console.log('gNums', gNums)
-
-
-// var num = drawNum();
-// console.log('num:', num);
-// console.log('gNums:', gNums);
-
-// num = drawNum();
-// console.log('num:', num);
-// console.log('gNums:', gNums);
+  
+function getListNeighbors(board, rowIdx, colIdx) {
+    var count = []
+    for (var i = rowIdx - 1; i <= rowIdx + 1; i++) {
+      if (i < 0||i >= board.length) continue;
+      for (var j = colIdx - 1; j <= colIdx + 1; j++) {
+        if (j < 0) continue;
+        if (j >= board[0].length) continue;
+        if (i === rowIdx && j === colIdx) continue;
+  
+        // Check if this neighbor cell is a mine
+        if (board[i][j].isMine) continue;
+         count.push({i,j})
+      }
+    }
+    return count
+}
 
 function drawNum() {
     return gNums.pop()
@@ -72,8 +77,6 @@ function shuffle(items) {
     return items;
 }
 
-var gNums2 = [1, 2, 3, 4, 5, 6, 7]
-
 function drawNum2() {
     var randIdx = getRandomInt(0, gNums2.length)
     var num = gNums2[randIdx]
@@ -87,11 +90,7 @@ function resetNums() {
         gNums2.push(i)
     }
 }
-// var board = [
-//     [{ val: 13, isHit: true }, { val: 66, isHit: false }],
-//     [{ val: 1, isHit: false }, { val: 6, isHit: false }]
-// ]
-// console.table(board)
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
@@ -108,7 +107,7 @@ function startTimer() {
         const seconds = getFormatSeconds(timeDiff)
         const milliSeconds = getFormatMilliSeconds(timeDiff)
 
-        document.querySelector('span.seconds').innerText =  seconds
+        document.querySelector('span.seconds').innerText = seconds
         document.querySelector('span.milli-seconds').innerText = milliSeconds
 
     }, 10)
@@ -126,6 +125,7 @@ function getEmptyPos(board) {
     var randInt = getRandomInt(0, emptyCells.length);
     return emptyCells[randInt]
 }
+
 function playSound() {
     const sound = new Audio('./sound/ariana')
     sound.play()

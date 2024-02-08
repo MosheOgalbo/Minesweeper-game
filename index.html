@@ -12,12 +12,12 @@
 <body onload="onInit()">
 
     <div class="difficulty-levels-button"> 
-        <button>2</button>
-        <button>4</button>
-        <button>16</button>
+        <button data-leve="4" data-mines="2" onclick="levelsOfPlay(this)">Beginner2</button>
+        <button data-leve="8" data-mines="14"  onclick="levelsOfPlay(this)">Medium4</button>
+        <button data-leve="12" data-mines="32"  onclick="levelsOfPlay(this)">Expert16</button>
     </div>
     <div>
-        <h2>Score: <span class="score">0</span></h2>
+        <h2>Mines: <span class="score">0</span></h2>
         <img src="./img/m" alt="user " />"
         <h2>Timer : <span class="score">0</span> </h2>
     </div>
@@ -28,6 +28,7 @@
         </table>
     </div>
     <script src="./js/utils.js"></script>
+    <script src="./js/mines.js"></script>
     <script src="./js/gimir.js"></script>
     <script src="./js/main.js"></script>
 </body>
