@@ -14,20 +14,22 @@ const MINES_IMG = '💣'
 const FLAG = ' 🚩'
 
 function onInit() {
+    gGame.markedCount = 0
+    gGame.shownCount=0
+    changesLifeGame(3)
     userMode('start')
     gGame.isOn = false
-    // gGame.LiveInGame = 3
     if (gTimerInterval) clearInterval(gTimerInterval)
     document.querySelector('span.timer-seconds').innerText = ''
     document.querySelector('span.timer-milli-seconds').innerText = ''
     // playSound()
     // gFirstMove = false
     gBoard = buildBoard()
-    createMinesInBoard(gBoard)
+    //createMinesInBoard(gBoard)
     //  console.log(gBoard)
     setMinesNegsCount(gBoard)
-    renderShownCount()
-    changesLifeGame()
+    
+   
     renderBoard(gBoard)
 
 }
@@ -71,7 +73,7 @@ function createMinesInBoard(board) {
             if (Math.random() > 0.5 && constMines > 0) {
                 board[i][j].isMine = true
                 constMines--
-                
+
             }
         }
     }
@@ -109,11 +111,12 @@ function setMinesNegsCount(board) {
     var indexMines = {}
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board.length; j++) {
+            constNegs = 0
             indexMines = board[i][j]
             constNegs = countingNeighboringCells(board, i, j)
             //console.log(constNegs)
             indexMines.minesAroundCount = constNegs
-            constNegs = 0
+            
         }
     }
     return constNegs
@@ -122,10 +125,19 @@ function setMinesNegsCount(board) {
 function onCellMarked(es, el, i, j) {
     es.preventDefault()
     el.classList.toggle('covered')
-    if (el.innerText !== FLAG) el.innerText = FLAG
-    else el.innerText = `${(gBoard[i][j].isMine) ? MINES_IMG : gBoard[i][j].minesAroundCount}`
-
-
+    
+    if (el.innerText !== FLAG) {
+        el.innerText = FLAG
+        gBoard[i][j].isMarked = true
+        if (gBoard[i][j].isMine) gGame.markedCount++
+        console.log(gGame.markedCount)
+    }
+    else {
+        if (gBoard[i][j].isMine) gGame.markedCount--
+        gBoard[i][j].isMarked = false
+        el.innerText = `${(gBoard[i][j].isMine) ? MINES_IMG : gBoard[i][j].minesAroundCount}`
+    }
+    console.log(gBoard[i][j].isMarked)
 }
 
 function onCellClicked(el, i, j) {
@@ -141,11 +153,12 @@ function onCellClicked(el, i, j) {
     //console.log(i,j)
     if (gBoard[i][j].isMine) {
         //* Because the next attraction arc decreases the life and then gives more life and therefore compares to 1
-        if (gGame.LiveInGame === 1) {
+        if (gGame.LiveInGame <= 1) {
             clearInterval(gTimerInterval)
             gBoard[i][j].isShown = true
             userMode('Fails')
-            checkSlotMie(el)
+            checkSlotMieGameOver(el)
+            changesLifeGame(-1)
             return
         }
         else {
@@ -153,11 +166,11 @@ function onCellClicked(el, i, j) {
             changesLifeGame(-1)
             gBoard[i][j].isShown = true
         }
-
         return
     } else {
         gBoard[i][j].isShown = true
         expandShown(i, j)
+        gGame.shownCount++
     }
 
 
@@ -169,8 +182,8 @@ function expandShown(i, j) {
     for (var i = 0; i < slots.length; i++) {
         var cell = slots[i]
         getItemDataBoard(cell.i, cell.j).classList.remove('covered')
+        gGame.shownCount++
         gBoard[cell.i][cell.j].isShown = true
-
     }
 }
 
