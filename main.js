@@ -33,13 +33,16 @@ function onInit() {
 }
 
 function levelsOfPlay(el) {
+    gGame.shownCount = 0
+    renderShownCount()
     const level = el.dataset.leve
     const mines = el.dataset.mines
-    console.log(level, mines)
+    // console.log(level, mines)
     gLevel.SIZE = level
     gLevel.MINES = mines
     //gGame.shownCount = mines
     // console.log(gLevel)
+
     onInit()
 }
 
@@ -140,7 +143,7 @@ function onCellMarked(es, el, i, j) {
 }
 
 function onCellClicked(el, i, j) {
-    if(gBoard[i][j].isMarked)return
+    if (gBoard[i][j].isMarked) return
     firstStepGame(el, i, j)
     userMode('step')
 
@@ -148,7 +151,7 @@ function onCellClicked(el, i, j) {
 
     //if (!gFirstMove) createMinesInBoard(gBoard)
     //console.log(i,j)
-    if (gBoard[i][j].isMine ) {
+    if (gBoard[i][j].isMine) {
         //* Because the next attraction arc decreases the life and then gives more life and therefore compares to 1
         if (gGame.LiveInGame <= 1) {
             clearInterval(gTimerInterval)
@@ -217,5 +220,5 @@ function firstStepGame(el, i, j) {
         startTimer()
         return true
     }
-return false
+    return false
 }

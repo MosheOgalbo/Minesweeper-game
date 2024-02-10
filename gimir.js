@@ -9,7 +9,7 @@ var gGame = {
 }
 var gStartTime;
 
-function renderShownCount() {
+function renderShownCount(reset) {
   const constMines = document.querySelector('.score')
   constMines.innerText = gGame.shownCount
 }
@@ -39,7 +39,6 @@ function checkGameOver() {
 
 
 }
-
 
 function checkSlotMieGameOver(el) {
   console.log(el.innerText)
