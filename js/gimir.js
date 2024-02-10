@@ -31,21 +31,12 @@ function startTimer() {
 }
 
 function checkGameOver() {
-  if (gGame.shownCount + gGame.markedCount === SIZE * SIZE) {
+  if (gGame.markedCount === gLevel.MINES &&
+    gGame.markedCount + gGame.shownCount === SIZE * SIZE) {
     document.querySelector('.bordered').style.opacity = 0
     userMode('victory')
   } else return
-  // var cont = 0
-  // for (var i = 0; i < gBoard; i++) {
-  //   for (var j = 0; j < gBoard.length; j++) {
 
-  //     if (gBoard[i][j].isShow && !gBoard[i][j].isMine ||
-  //       gBoard[i][j].isMarked && gBoard[i][j].isMine) {
-  //       cont++
-  //     }
-  //   }
-  // }
-  // if (cont === gLevel.SIZE ** 2) {
 
 }
 

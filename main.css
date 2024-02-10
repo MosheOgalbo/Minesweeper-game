@@ -1,0 +1,73 @@
+body {
+    background-color: rgb(237, 237, 237);
+    text-align: center;
+    color: brown;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-image: url("https://images.wcdn.co.il/f_auto,q_auto,w_1200,t_54/3/6/1/0/3610904-46.jpg");
+    background-size:contain;
+    background-repeat:space;
+    background-size:cover;
+    background-attachment:fixed;
+   
+    /* background-attachment:initial; */
+}
+
+.board-container {
+    width: 50%;
+    height: 20rem;
+    border: 2px solid;
+    margin-left: 20rem;
+    box-shadow: 20px 10px 15px 0px red;
+    /* border-collapse: collapse; */
+    display: table;
+    border-collapse: separate;
+    box-sizing: border-box;
+    border-collapse: collapse;
+
+}
+
+.td {
+    padding: 12px 15px;
+    border: 1px solid #0dea53;
+    position: relative;
+    text-indent: initial;
+    border-spacing: 2px;
+    border-color: rgb(15, 229, 101);
+    width: 10%;
+    padding-bottom: 1%;
+    text-align: center;
+    width: 1%;
+    padding: 0;
+    height: 0;
+    position: relative;
+}
+
+.bordered {
+    height: 20%;
+    width: 3%;
+    border: 0.5px dotted rgb(219, 11, 11);
+    background-color: #ee0707;
+    opacity: 20;
+}
+
+.table td span {
+    color: rgb(0, 255, 136);
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+
+
+}
+
+.covered {
+    opacity: 0;
+}
+
+.blocked {
+    pointer-events: none;
+}
