@@ -71,3 +71,8 @@ body {
 .blocked {
     pointer-events: none;
 }
+
+.more-buttons{
+    box-shadow: 20px 10px 15px 0px red;
+    margin-top: 6%;
+}
